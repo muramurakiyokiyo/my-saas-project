@@ -11,7 +11,7 @@ export default function PetPage() {
 
   if (usersLoading || petsLoading) return <div className="p-8">読み込み中...</div>;
   if (usersError) return <div className="p-8">エラーが発生しました: {(usersError as Error).message}</div>;
-  if (petsError) return <div className="p-8">動物園が閉まっています（エラー）</div>;
+  if (petsError) return <div className="p-8">エラーが発生しました</div>;
 
   return (
     <div className="p-8 space-y-8">
