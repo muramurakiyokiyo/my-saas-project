@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      summary: ペットの一覧を取得します
+      operationId: listPets
+      tags:
+        - pets
+      parameters:
+        - name: limit
+          in: query
+          description: 取得する最大件数
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pets'
+    post:
+      summary: ペットを新しく登録します
+      operationId: createPets
+      tags:
+        - pets
+      responses:
+        '201':
+          description: 登録完了
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Pets:
+      type: array
+      items:
+        $ref: '#/components/schemas/Pet'
+
