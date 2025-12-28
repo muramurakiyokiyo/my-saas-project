@@ -1,13 +1,8 @@
 'use client'
-import { useQuery } from '@tanstack/react-query';
-import { fetchUsers } from './api';
+import { useUsers } from './hooks/useUsers';
 
 export default function UserListPage() {
-  // useQuery が「通信の全状態」を管理してくれる
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['users'], // この文字列でキャッシュを識別する（重要！）
-    queryFn: fetchUsers, // 実行する関数
-  });
+  const { data, isLoading, error } = useUsers();
 
   if (isLoading) return <div className="p-8">サーバーに接続中...</div>;
   if (error) return <div className="p-8">エラーが発生しました: {(error as Error).message}</div>;
