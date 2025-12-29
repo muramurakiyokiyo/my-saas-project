@@ -1,5 +1,5 @@
-import PetForm from './components/PetForm'
-import PetList from './components/PetList'
+import PetForm from '../components/PetForm'
+import PetList from '../components/PetList'
 
 export default function PetPage() {
   return (

@@ -1,16 +1,18 @@
 'use client'
+import { useTranslations } from 'next-intl'
 import { useListPets } from '../generated/pets/pets'
 import PetListItem from './PetListItem'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function PetList() {
+  const t = useTranslations('petList')
   const { data: petsData, isLoading: petsLoading, isError: petsError } = useListPets({ limit: 10 })
 
   if (petsLoading) {
     return (
       <Card>
         <CardContent className="pt-6">
-          <div className="text-center text-muted-foreground">読み込み中...</div>
+          <div className="text-center text-muted-foreground">{t('loading')}</div>
         </CardContent>
       </Card>
     )
@@ -20,7 +22,7 @@ export default function PetList() {
     return (
       <Card>
         <CardContent className="pt-6">
-          <div className="text-center text-destructive">エラーが発生しました</div>
+          <div className="text-center text-destructive">{t('error')}</div>
         </CardContent>
       </Card>
     )
@@ -29,8 +31,8 @@ export default function PetList() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>ペット一覧</CardTitle>
-        <CardDescription>登録されているペットの一覧です</CardDescription>
+        <CardTitle>{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
         {petsData?.data && petsData.data.length > 0 ? (
@@ -41,7 +43,7 @@ export default function PetList() {
           </div>
         ) : (
           <div className="text-center text-muted-foreground py-8">
-            ペットが登録されていません
+            {t('empty')}
           </div>
         )}
       </CardContent>

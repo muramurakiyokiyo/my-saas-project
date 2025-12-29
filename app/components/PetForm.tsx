@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createPetSchema, type CreatePetInput } from '../../src/schemas/petSchema'
 import axios from 'axios'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -18,6 +19,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function PetForm() {
+  const t = useTranslations('petForm')
   const queryClient = useQueryClient()
   const form = useForm<CreatePetInput>({
     resolver: zodResolver(createPetSchema),
@@ -34,10 +36,10 @@ export default function PetForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/pets'] as const })
       form.reset()
-      toast.success('ペットを登録しました')
+      toast.success(t('success'))
     },
     onError: () => {
-      toast.error('エラーが発生しました。もう一度お試しください。')
+      toast.error(t('error'))
     },
   })
 
@@ -48,8 +50,8 @@ export default function PetForm() {
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle>新規ペット登録</CardTitle>
-        <CardDescription>新しいペットの情報を入力してください</CardDescription>
+        <CardTitle>{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -59,9 +61,9 @@ export default function PetForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>名前</FormLabel>
+                  <FormLabel>{t('nameLabel')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="ペットの名前" {...field} />
+                    <Input placeholder={t('namePlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -72,9 +74,9 @@ export default function PetForm() {
               name="tag"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>タグ</FormLabel>
+                  <FormLabel>{t('tagLabel')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="例: トイプードル" {...field} />
+                    <Input placeholder={t('tagPlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,7 +87,7 @@ export default function PetForm() {
               disabled={createPetsMutation.isPending}
               className="w-full"
             >
-              {createPetsMutation.isPending ? '登録中...' : '登録'}
+              {createPetsMutation.isPending ? t('submitting') : t('submit')}
             </Button>
           </form>
         </Form>

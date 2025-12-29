@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { useQueryClient } from '@tanstack/react-query'
 import { useUpdatePet, useDeletePet } from '../generated/pets/pets'
 import type { Pet } from '../generated/petstore.schemas'
@@ -24,6 +25,7 @@ interface PetListItemProps {
 }
 
 export default function PetListItem({ pet }: PetListItemProps) {
+  const t = useTranslations('petListItem')
   const queryClient = useQueryClient()
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState(pet.name)
@@ -79,7 +81,7 @@ export default function PetListItem({ pet }: PetListItemProps) {
                 type="text"
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
-                placeholder="名前"
+                placeholder={t('namePlaceholder')}
                 disabled={isPending}
                 className="flex-1"
               />
@@ -87,7 +89,7 @@ export default function PetListItem({ pet }: PetListItemProps) {
                 type="text"
                 value={editTag}
                 onChange={(e) => setEditTag(e.target.value)}
-                placeholder="タグ"
+                placeholder={t('tagPlaceholder')}
                 disabled={isPending}
                 className="flex-1"
               />
@@ -97,7 +99,7 @@ export default function PetListItem({ pet }: PetListItemProps) {
               disabled={isPending || !editName.trim()}
               size="sm"
             >
-              保存
+              {t('save')}
             </Button>
             <Button
               onClick={handleCancel}
@@ -105,7 +107,7 @@ export default function PetListItem({ pet }: PetListItemProps) {
               variant="outline"
               size="sm"
             >
-              キャンセル
+              {t('cancel')}
             </Button>
           </div>
         </CardContent>
@@ -133,7 +135,7 @@ export default function PetListItem({ pet }: PetListItemProps) {
               size="sm"
             >
               <Pencil className="h-4 w-4 mr-2" />
-              編集
+              {t('edit')}
             </Button>
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -143,24 +145,23 @@ export default function PetListItem({ pet }: PetListItemProps) {
                   disabled={isPending}
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
-                  削除
+                  {t('delete')}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>削除の確認</AlertDialogTitle>
+                  <AlertDialogTitle>{t('deleteConfirmTitle')}</AlertDialogTitle>
                   <AlertDialogDescription>
-                    「{pet.name}」を削除してもよろしいですか？
-                    この操作は取り消せません。
+                    {t('deleteConfirmDescription', { name: pet.name })}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>キャンセル</AlertDialogCancel>
+                  <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                   <AlertDialogAction
                     onClick={handleDelete}
                     className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                   >
-                    削除
+                    {t('delete')}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

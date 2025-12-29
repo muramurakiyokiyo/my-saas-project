@@ -1,0 +1,31 @@
+{
+  "petForm": {
+    "title": "Register New Pet",
+    "description": "Please enter information for a new pet",
+    "nameLabel": "Name",
+    "namePlaceholder": "Pet name",
+    "tagLabel": "Tag",
+    "tagPlaceholder": "e.g., Toy Poodle",
+    "submit": "Register",
+    "submitting": "Registering...",
+    "success": "Pet registered successfully",
+    "error": "An error occurred. Please try again."
+  },
+  "petList": {
+    "title": "Pet List",
+    "description": "List of registered pets",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "empty": "No pets registered"
+  },
+  "petListItem": {
+    "namePlaceholder": "Name",
+    "tagPlaceholder": "Tag",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirmTitle": "Confirm Deletion",
+    "deleteConfirmDescription": "Are you sure you want to delete \"{name}\"?\nThis action cannot be undone."
+  }
+}

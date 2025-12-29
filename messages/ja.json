@@ -1,0 +1,31 @@
+{
+  "petForm": {
+    "title": "新規ペット登録",
+    "description": "新しいペットの情報を入力してください",
+    "nameLabel": "名前",
+    "namePlaceholder": "ペットの名前",
+    "tagLabel": "タグ",
+    "tagPlaceholder": "例: トイプードル",
+    "submit": "登録",
+    "submitting": "登録中...",
+    "success": "ペットを登録しました",
+    "error": "エラーが発生しました。もう一度お試しください。"
+  },
+  "petList": {
+    "title": "ペット一覧",
+    "description": "登録されているペットの一覧です",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "empty": "ペットが登録されていません"
+  },
+  "petListItem": {
+    "namePlaceholder": "名前",
+    "tagPlaceholder": "タグ",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "edit": "編集",
+    "delete": "削除",
+    "deleteConfirmTitle": "削除の確認",
+    "deleteConfirmDescription": "「{name}」を削除してもよろしいですか？\nこの操作は取り消せません。"
+  }
+}
