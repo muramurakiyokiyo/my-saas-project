@@ -23,5 +23,26 @@ export const handlers = [
     pets.push(pet)
     return HttpResponse.json(null, { status: 201 })
   }),
+  // /pets/{petId} への PUT リクエストを待ち伏せする
+  http.put('*/pets/:petId', async ({ request, params }) => {
+    const petId = Number(params.petId)
+    const updatedPet = await request.json() as { id: number; name: string; tag?: string }
+    const index = pets.findIndex(p => p.id === petId)
+    if (index === -1) {
+      return HttpResponse.json({ error: 'ペットが見つかりません' }, { status: 404 })
+    }
+    pets[index] = { ...pets[index], ...updatedPet }
+    return HttpResponse.json(pets[index], { status: 200 })
+  }),
+  // /pets/{petId} への DELETE リクエストを待ち伏せする
+  http.delete('*/pets/:petId', async ({ params }) => {
+    const petId = Number(params.petId)
+    const index = pets.findIndex(p => p.id === petId)
+    if (index === -1) {
+      return HttpResponse.json({ error: 'ペットが見つかりません' }, { status: 404 })
+    }
+    pets.splice(index, 1)
+    return HttpResponse.json(null, { status: 204 })
+  }),
 ]
 

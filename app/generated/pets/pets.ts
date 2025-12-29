@@ -32,6 +32,7 @@ import type {
 
 import type {
   ListPetsParams,
+  Pet,
   Pets
 } from '../petstore.schemas';
 
@@ -188,6 +189,128 @@ export const useCreatePets = <TError = AxiosError<unknown>,
       > => {
 
       const mutationOptions = getCreatePetsMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    /**
+ * @summary ペット情報を更新します
+ */
+export const updatePet = (
+    petId: number,
+    pet: Pet, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<Pet>> => {
+    
+    
+    return axios.put(
+      `/pets/${petId}`,
+      pet,options
+    );
+  }
+
+
+
+export const getUpdatePetMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePet>>, TError,{petId: number;data: Pet}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof updatePet>>, TError,{petId: number;data: Pet}, TContext> => {
+
+const mutationKey = ['updatePet'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updatePet>>, {petId: number;data: Pet}> = (props) => {
+          const {petId,data} = props ?? {};
+
+          return  updatePet(petId,data,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdatePetMutationResult = NonNullable<Awaited<ReturnType<typeof updatePet>>>
+    export type UpdatePetMutationBody = Pet
+    export type UpdatePetMutationError = AxiosError<unknown>
+
+    /**
+ * @summary ペット情報を更新します
+ */
+export const useUpdatePet = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePet>>, TError,{petId: number;data: Pet}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updatePet>>,
+        TError,
+        {petId: number;data: Pet},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdatePetMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    /**
+ * @summary ペットを削除します
+ */
+export const deletePet = (
+    petId: number, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
+    
+    
+    return axios.delete(
+      `/pets/${petId}`,options
+    );
+  }
+
+
+
+export const getDeletePetMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePet>>, TError,{petId: number}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof deletePet>>, TError,{petId: number}, TContext> => {
+
+const mutationKey = ['deletePet'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deletePet>>, {petId: number}> = (props) => {
+          const {petId} = props ?? {};
+
+          return  deletePet(petId,axiosOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeletePetMutationResult = NonNullable<Awaited<ReturnType<typeof deletePet>>>
+    
+    export type DeletePetMutationError = AxiosError<unknown>
+
+    /**
+ * @summary ペットを削除します
+ */
+export const useDeletePet = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePet>>, TError,{petId: number}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deletePet>>,
+        TError,
+        {petId: number},
+        TContext
+      > => {
+
+      const mutationOptions = getDeletePetMutationOptions(options);
 
       return useMutation(mutationOptions, queryClient);
     }

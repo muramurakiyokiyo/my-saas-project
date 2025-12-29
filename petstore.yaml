@@ -32,6 +32,49 @@ paths:
       responses:
         '201':
           description: 登録完了
+  /pets/{petId}:
+    put:
+      summary: ペット情報を更新します
+      operationId: updatePet
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: ペットID
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+    delete:
+      summary: ペットを削除します
+      operationId: deletePet
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: ペットID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: 削除成功
 components:
   schemas:
     Pet:
