@@ -1,22 +1,51 @@
 'use client'
 import { useListPets } from '../generated/pets/pets'
 import PetListItem from './PetListItem'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function PetList() {
   const { data: petsData, isLoading: petsLoading, isError: petsError } = useListPets({ limit: 10 })
 
-  if (petsLoading) return <div className="p-8">読み込み中...</div>
-  if (petsError) return <div className="p-8">エラーが発生しました</div>
+  if (petsLoading) {
+    return (
+      <Card>
+        <CardContent className="pt-6">
+          <div className="text-center text-muted-foreground">読み込み中...</div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (petsError) {
+    return (
+      <Card>
+        <CardContent className="pt-6">
+          <div className="text-center text-destructive">エラーが発生しました</div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-4">自動生成されたAPIから取得</h1>
-      <ul className="border-t">
-        {petsData?.data.map((pet) => (
-          <PetListItem key={pet.id} pet={pet} />
-        ))}
-      </ul>
-    </>
+    <Card>
+      <CardHeader>
+        <CardTitle>ペット一覧</CardTitle>
+        <CardDescription>登録されているペットの一覧です</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {petsData?.data && petsData.data.length > 0 ? (
+          <div className="space-y-4">
+            {petsData.data.map((pet) => (
+              <PetListItem key={pet.id} pet={pet} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-muted-foreground py-8">
+            ペットが登録されていません
+          </div>
+        )}
+      </CardContent>
+    </Card>
   )
 }
 

@@ -3,6 +3,21 @@ import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useUpdatePet, useDeletePet } from '../generated/pets/pets'
 import type { Pet } from '../generated/petstore.schemas'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent } from '@/components/ui/card'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
+import { Pencil, Trash2 } from 'lucide-react'
 
 interface PetListItemProps {
   pet: Pet
@@ -49,75 +64,110 @@ export default function PetListItem({ pet }: PetListItemProps) {
   }
 
   const handleDelete = () => {
-    if (confirm(`「${pet.name}」を削除してもよろしいですか？`)) {
-      deletePetMutation.mutate({ petId: pet.id })
-    }
+    deletePetMutation.mutate({ petId: pet.id })
   }
 
   const isPending = updatePetMutation.isPending || deletePetMutation.isPending
 
   if (isEditing) {
     return (
-      <li className="p-4 border-b flex items-center gap-2 bg-gray-50">
-        <div className="flex-1 flex gap-2">
-          <input
-            type="text"
-            value={editName}
-            onChange={(e) => setEditName(e.target.value)}
-            className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="名前"
-            disabled={isPending}
-          />
-          <input
-            type="text"
-            value={editTag}
-            onChange={(e) => setEditTag(e.target.value)}
-            className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="タグ"
-            disabled={isPending}
-          />
-        </div>
-        <button
-          onClick={handleSave}
-          disabled={isPending || !editName.trim()}
-          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-        >
-          保存
-        </button>
-        <button
-          onClick={handleCancel}
-          disabled={isPending}
-          className="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-        >
-          キャンセル
-        </button>
-      </li>
+      <Card className="mb-4">
+        <CardContent className="pt-6">
+          <div className="flex items-center gap-2">
+            <div className="flex-1 flex gap-2">
+              <Input
+                type="text"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                placeholder="名前"
+                disabled={isPending}
+                className="flex-1"
+              />
+              <Input
+                type="text"
+                value={editTag}
+                onChange={(e) => setEditTag(e.target.value)}
+                placeholder="タグ"
+                disabled={isPending}
+                className="flex-1"
+              />
+            </div>
+            <Button
+              onClick={handleSave}
+              disabled={isPending || !editName.trim()}
+              size="sm"
+            >
+              保存
+            </Button>
+            <Button
+              onClick={handleCancel}
+              disabled={isPending}
+              variant="outline"
+              size="sm"
+            >
+              キャンセル
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     )
   }
 
   return (
-    <li className="p-4 border-b flex items-center justify-between hover:bg-gray-50">
-      <div>
-        <span className="font-medium">{pet.name}</span>
-        {pet.tag && <span className="text-xs text-blue-500 ml-2">#{pet.tag}</span>}
-      </div>
-      <div className="flex gap-2">
-        <button
-          onClick={() => setIsEditing(true)}
-          disabled={isPending}
-          className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-        >
-          編集
-        </button>
-        <button
-          onClick={handleDelete}
-          disabled={isPending}
-          className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-        >
-          削除
-        </button>
-      </div>
-    </li>
+    <Card className="mb-4 hover:shadow-md transition-shadow">
+      <CardContent className="pt-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="font-medium text-lg">{pet.name}</span>
+            {pet.tag && (
+              <span className="text-sm text-muted-foreground ml-2">
+                #{pet.tag}
+              </span>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setIsEditing(true)}
+              disabled={isPending}
+              variant="outline"
+              size="sm"
+            >
+              <Pencil className="h-4 w-4 mr-2" />
+              編集
+            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  disabled={isPending}
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  削除
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>削除の確認</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    「{pet.name}」を削除してもよろしいですか？
+                    この操作は取り消せません。
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>キャンセル</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDelete}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    削除
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
-
