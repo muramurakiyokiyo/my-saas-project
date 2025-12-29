@@ -2,6 +2,7 @@
 // 生成された場所からインポート（パスは生成先に合わせて調整してください）
 import { useListPets } from './generated/pets/pets';
 import type { Pet } from './generated/petstore.schemas';
+import PetForm from './components/PetForm';
 
 export default function PetPage() {
   // 自分で作ったフックのように呼ぶだけ。型補完も完璧！
@@ -12,6 +13,7 @@ export default function PetPage() {
 
   return (
     <div className="p-8">
+      <PetForm />
       <h1 className="text-2xl font-bold mb-4">自動生成されたAPIから取得</h1>
       <ul>
         {petsData?.data.map((pet: Pet) => (
