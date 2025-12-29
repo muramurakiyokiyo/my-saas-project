@@ -1,10 +1,20 @@
 import { z } from 'zod';
 
-export const createPetSchema = z.object({
-  name: z.string().min(1, '名前は必須です').max(20, '20文字以内で入力してください'),
-  tag: z.string().min(1, 'タグは必須です'),
-});
+// スキーマを生成する関数（多言語対応）
+export function createPetSchema(messages: {
+  nameRequired: string;
+  nameMaxLength: string;
+  tagRequired: string;
+}) {
+  return z.object({
+    name: z.string().min(1, messages.nameRequired).max(20, messages.nameMaxLength),
+    tag: z.string().min(1, messages.tagRequired),
+  });
+}
 
-// このスキーマから TypeScript の型を自動抽出
-export type CreatePetInput = z.infer<typeof createPetSchema>;
+// 型定義
+export type CreatePetInput = {
+  name: string;
+  tag: string;
+};
 

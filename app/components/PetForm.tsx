@@ -6,6 +6,7 @@ import { createPetSchema, type CreatePetInput } from '../../src/schemas/petSchem
 import axios from 'axios'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
+import { useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -21,8 +22,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 export default function PetForm() {
   const t = useTranslations('petForm')
   const queryClient = useQueryClient()
+  
+  // 多言語対応のスキーマを生成
+  const schema = useMemo(() => {
+    return createPetSchema({
+      nameRequired: t('validation.nameRequired'),
+      nameMaxLength: t('validation.nameMaxLength'),
+      tagRequired: t('validation.tagRequired'),
+    })
+  }, [t])
+  
   const form = useForm<CreatePetInput>({
-    resolver: zodResolver(createPetSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       name: '',
       tag: '',

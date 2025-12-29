@@ -9,7 +9,12 @@
     "submit": "登録",
     "submitting": "登録中...",
     "success": "ペットを登録しました",
-    "error": "エラーが発生しました。もう一度お試しください。"
+    "error": "エラーが発生しました。もう一度お試しください。",
+    "validation": {
+      "nameRequired": "名前は必須です",
+      "nameMaxLength": "20文字以内で入力してください",
+      "tagRequired": "タグは必須です"
+    }
   },
   "petList": {
     "title": "ペット一覧",

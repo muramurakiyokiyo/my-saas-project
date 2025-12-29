@@ -9,7 +9,12 @@
     "submit": "Register",
     "submitting": "Registering...",
     "success": "Pet registered successfully",
-    "error": "An error occurred. Please try again."
+    "error": "An error occurred. Please try again.",
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMaxLength": "Please enter within 20 characters",
+      "tagRequired": "Tag is required"
+    }
   },
   "petList": {
     "title": "Pet List",
