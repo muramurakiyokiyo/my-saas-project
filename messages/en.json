@@ -41,7 +41,8 @@
     "500": "Internal server error",
     "502": "Bad gateway error",
     "503": "Service unavailable",
-    "network": "Network error occurred",
+    "network": "Network error occurred. Please check your internet connection.",
+    "timeout": "Request timed out. Please try again later.",
     "unknown": "An unexpected error occurred"
   }
 }
