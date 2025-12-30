@@ -32,5 +32,16 @@
     "delete": "Delete",
     "deleteConfirmTitle": "Confirm Deletion",
     "deleteConfirmDescription": "Are you sure you want to delete \"{name}\"?\nThis action cannot be undone."
+  },
+  "apiErrors": {
+    "400": "Bad Request",
+    "401": "Authentication required",
+    "403": "Access denied",
+    "404": "Resource not found",
+    "500": "Internal server error",
+    "502": "Bad gateway error",
+    "503": "Service unavailable",
+    "network": "Network error occurred",
+    "unknown": "An unexpected error occurred"
   }
 }

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createPetSchema, type CreatePetInput } from '../../src/schemas/petSchema'
-import axios from 'axios'
+import apiClient from '@/src/api/client'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 import { useMemo } from 'react'
@@ -45,16 +45,14 @@ export default function PetForm() {
 
   const createPetsMutation = useMutation({
     mutationFn: async (data: CreatePetInput) => {
-      return await axios.post('/pets', data)
+      return await apiClient.post('/pets', data)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/pets'] as const })
       form.reset()
       toast.success(t('success'))
     },
-    onError: () => {
-      toast.error(t('error'))
-    },
+    // エラーハンドリングは共通インターセプターで処理されるため、onErrorは削除
   })
 
   const onSubmit = (data: CreatePetInput) => {

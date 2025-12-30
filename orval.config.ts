@@ -6,6 +6,11 @@ export default {
       client: 'react-query', // ここで TanStack Query 用のコードを出すよう指定
       mode: 'tags-split',
       mock: true,
+      override: {
+        axios: {
+          instance: '@/src/api/client#apiClient',
+        },
+      },
     },
   },
 };

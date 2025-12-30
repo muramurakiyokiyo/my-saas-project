@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function PetList() {
   const t = useTranslations('petList')
-  const { data: petsData, isLoading: petsLoading, isError: petsError } = useListPets({ limit: 10 })
+  const { data: petsData, isLoading: petsLoading } = useListPets({ limit: 10 })
 
   if (petsLoading) {
     return (
@@ -18,15 +18,8 @@ export default function PetList() {
     )
   }
 
-  if (petsError) {
-    return (
-      <Card>
-        <CardContent className="pt-6">
-          <div className="text-center text-destructive">{t('error')}</div>
-        </CardContent>
-      </Card>
-    )
-  }
+  // エラーハンドリングは共通インターセプターで処理されるため、エラー表示を削除
+  // エラー時も空の状態を表示（エラーメッセージはトーストで表示される）
 
   return (
     <Card>
