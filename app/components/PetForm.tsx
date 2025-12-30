@@ -34,11 +34,14 @@ export default function PetForm() {
   
   const form = useForm<CreatePetInput>({
     resolver: zodResolver(schema),
+    mode: 'onTouched',
     defaultValues: {
       name: '',
       tag: '',
     },
   })
+  
+  const { isValid } = form.formState
 
   const createPetsMutation = useMutation({
     mutationFn: async (data: CreatePetInput) => {
@@ -95,7 +98,7 @@ export default function PetForm() {
             />
             <Button
               type="submit"
-              disabled={createPetsMutation.isPending}
+              disabled={!isValid || createPetsMutation.isPending}
               className="w-full"
             >
               {createPetsMutation.isPending ? t('submitting') : t('submit')}
