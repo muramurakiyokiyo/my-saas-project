@@ -13,16 +13,15 @@ export function ErrorHandlerInitializer() {
 
   useEffect(() => {
     const handler = (error: AxiosError) => {
-      // ネットワークエラーの場合（オフライン、タイムアウト、接続エラーなど）
+      // GETリクエストのエラーはReact Queryが処理するため、スキップ
+      // ただし、明示的にエラー表示が必要な場合は表示する
+      const method = error.config?.method?.toUpperCase();
+      
+      // ネットワークエラーの場合
       if (!error.response) {
-        // タイムアウトエラーの場合
-        if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
-          toast.error(t('timeout'));
-        } else {
-          // その他のネットワークエラー（オフラインなど）
+        if (method !== 'GET') {
           toast.error(t('network'));
         }
-        // エラーを呼び出し元に伝播させる（React QueryがisPendingをリセットできるように）
         return;
       }
 
@@ -55,8 +54,11 @@ export function ErrorHandlerInitializer() {
           errorMessage = t('unknown');
       }
 
-      // すべてのエラーをトーストで表示
-      toast.error(errorMessage);
+      // GETリクエスト以外の場合のみトーストを表示
+      // GETリクエストのエラーはReact Queryが処理するため
+      if (method !== 'GET') {
+        toast.error(errorMessage);
+      }
     };
 
     setGlobalErrorHandler(handler);

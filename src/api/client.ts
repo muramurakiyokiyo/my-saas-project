@@ -8,7 +8,7 @@ let globalErrorHandler: ErrorHandler | null = null;
 // カスタムaxiosインスタンスを作成
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '',
-  timeout: 10000, // 10秒でタイムアウト（オフライン時の無限待機を防ぐ）
+  timeout: 10000,
 });
 
 // リクエストインターセプター

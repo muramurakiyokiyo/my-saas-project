@@ -52,9 +52,7 @@ export default function PetForm() {
       form.reset()
       toast.success(t('success'))
     },
-    // エラーハンドリングは共通インターセプターで処理される
-    // React Queryが自動的にisPendingをfalseにリセットするため、明示的なonErrorは不要
-    // ただし、ネットワークエラーやタイムアウト時も確実にリセットされる
+    // エラーハンドリングは共通インターセプターで処理されるため、onErrorは削除
   })
 
   const onSubmit = (data: CreatePetInput) => {
