@@ -1,17 +1,10 @@
-import { routing } from '@/src/i18n/routing';
-
+// app/layout.tsx
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  return (
-    <html>
-      <body>{children}</body>
-    </html>
-  );
-}
-
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+}) {
+  // 最上位レイアウトは children をそのまま返すだけにします。
+  // 実際の html/body タグは app/[locale]/layout.tsx が担当します。
+  return children;
 }
