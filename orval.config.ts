@@ -7,7 +7,7 @@ export default {
       mode: 'tags-split',
       mock: {
         type: 'msw',
-        output: './src/api/generated', // MSWファイルの出力先をapp/の外に変更
+        output: './src/api/generated/pets.msw.ts', // MSWファイルの出力先をapp/の外に変更（完全なファイルパスを指定）
       },
       override: {
         axios: {
