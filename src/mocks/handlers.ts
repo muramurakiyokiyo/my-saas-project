@@ -14,14 +14,11 @@ export const handlers = [
   }),
   // /pets への POST リクエストを待ち伏せする
   http.post('*/pets', async ({ request }) => {
-    const newPet = await request.json() as { name: string; tag: string }
-    const pet = {
-      id: pets.length + 1,
-      name: newPet.name,
-      tag: newPet.tag,
-    }
-    pets.push(pet)
-    return HttpResponse.json(null, { status: 201 })
+    // ネットワークエラー（接続拒否など）をシミュレート
+    ///return HttpResponse.error() 
+        
+    // もし 500 エラーなどを試したい場合はこちら
+    return new HttpResponse(null, { status: 500 })
   }),
   // /pets/{petId} への PUT リクエストを待ち伏せする
   http.put('*/pets/:petId', async ({ request, params }) => {
